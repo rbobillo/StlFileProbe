@@ -1,14 +1,8 @@
 include("GsiBlock.jl")
 
-function getStr(io)::String
-    trim = strip(String(io))
-    strip(trim,['\0'])
-end
+getStr(io::IO)::String = strip(String(io)) |> trim -> strip(trim,['\0'])
 
-function getInt(io)::Int
-    n = tryparse(Int, String(io))
-    isa(n, Int) ? n : 0
-end
+getInt(io::IO)::Int = tryparse(Int, String(io)) |> n -> isa(n, Int) ? n : 0
 
 function gsiblockfromstl(file)::GsiBlock
     io = open(file)
