@@ -1,5 +1,5 @@
 using Pkg
 
 Pkg.add(
-    "JSON"
+    "JSON2"
 )
