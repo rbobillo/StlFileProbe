@@ -1,30 +1,20 @@
+include("jsonutils.jl")
+include("stringutils.jl")
+include("gui.jl")
 include("parsestl.jl")
 
-using Blink
+function displaygsi(json)
+    guidisplay(json)
 
-import JSON2
-import Blink
-
-gsiBlockAsJson(gsib)::String = JSON2.write(gsib)
-
-function displayGsi(json)
-    w = Window()
-    gblock = JSON2.read(json, GsiBlock)
-    fields = fieldnames(GsiBlock)
-    listfs = map(
-        x -> "<li>$(x) : $(getfield(gblock, Symbol(x)))</li>",
-        fields)
-    body!(w, "<ul>$(join(listfs))</ul>")
-
-    JSON2.@pretty json
+    prettydisplay(json)
 end
 
 function main(args)
     file = isempty(args) ? "res/test.stl" : args[1]
     gsib = gsiblockfromstl(file)
-    json = gsiBlockAsJson(gsib)
+    json = gsiblockasjson(gsib)
 
-    displayGsi(json)
+    displaygsi(json)
 end
 
 main(ARGS)
